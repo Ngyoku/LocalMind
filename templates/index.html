@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LocalMind — Votre IA personnelle</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <!-- BARRE LATERALE -->
+        <aside class="sidebar">
+
+            <!-- IDENTITE ET LOGO LOCALMIND -->
+            <div class="brand">
+
+                <div class="brand-icon" aria-label="Logo LocalMind">
+
+                    <svg viewBox="0 0 48 48" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+
+                        <path d="M24 5 L39 14 L39 34 L24 43 L9 34 L9 14 Z"
+                              stroke="currentColor"
+                              stroke-width="1.5"
+                              opacity="0.65"/>
+
+                        <path d="M24 12 L24 36 M12 24 L36 24
+                                 M15.5 15.5 L32.5 32.5
+                                 M32.5 15.5 L15.5 32.5"
+                              stroke="currentColor"
+                              stroke-width="1.3"
+                              opacity="0.65"/>
+
+                        <circle cx="24" cy="24" r="7"
+                                fill="currentColor"
+                                opacity="0.18"/>
+
+                        <circle cx="24" cy="24" r="4"
+                                fill="currentColor"/>
+
+                        <circle cx="24" cy="5" r="2"
+                                fill="currentColor"/>
+
+                        <circle cx="39" cy="14" r="2"
+                                fill="currentColor"/>
+
+                        <circle cx="39" cy="34" r="2"
+                                fill="currentColor"/>
+
+                        <circle cx="24" cy="43" r="2"
+                                fill="currentColor"/>
+
+                        <circle cx="9" cy="34" r="2"
+                                fill="currentColor"/>
+
+                        <circle cx="9" cy="14" r="2"
+                                fill="currentColor"/>
+
+                    </svg>
+
+                </div>
+
+                <div class="brand-name">LocalMind</div>
+
+            </div>
+
+
+            <!-- NOUVELLE DISCUSSION -->
+            <button class="new-chat-button" id="new-chat-button">
+
+                <span>＋</span>
+
+                Nouvelle discussion
+
+            </button>
+
+
+            <!-- HISTORIQUE -->
+            <div class="history-section">
+
+                <p class="section-label">ESPACE DE TRAVAIL</p>
+
+                <div class="history-list" id="history-list">
+
+                    <!-- Les conversations seront ajoutées ici par JavaScript -->
+
+                </div>
+
+            </div>
+
+
+            <!-- PARAMETRES ET ETAT DU MODELE -->
+            <div class="sidebar-bottom">
+
+                <div class="model-status">
+
+                    <span class="status-indicator"></span>
+
+                    <div>
+
+                        <strong>IA locale</strong>
+
+                        <small id="model-status">Vérification...</small>
+
+                    </div>
+
+                </div>
+
+                <button class="settings-button" id="settings-button">
+
+                    ⚙ Paramètres
+
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ZONE PRINCIPALE -->
+        <main class="main-content">
+
+
+            <!-- BARRE SUPERIEURE -->
+            <header class="topbar">
+
+                <div class="current-model">
+
+                    <span class="model-dot"></span>
+
+                    LocalMind AI
+
+                </div>
+
+                <div class="topbar-right">
+
+                    <span class="privacy-label">
+
+                        🔒 Privé et local
+
+                    </span>
+
+                </div>
+
+            </header>
+
+
+            <!-- ESPACE DE CONVERSATION -->
+            <section class="chat-area" id="chat-area">
+
+
+                <!-- ECRAN D'ACCUEIL -->
+                <div class="welcome-screen" id="welcome-screen">
+
+
+                    <!-- LOGO CENTRAL LOCALMIND -->
+                    <div class="welcome-icon" aria-label="Logo LocalMind">
+
+                        <svg viewBox="0 0 48 48" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+
+                            <path d="M24 5 L39 14 L39 34 L24 43 L9 34 L9 14 Z"
+                                  stroke="currentColor"
+                                  stroke-width="1.5"
+                                  opacity="0.65"/>
+
+                            <path d="M24 12 L24 36 M12 24 L36 24
+                                     M15.5 15.5 L32.5 32.5
+                                     M32.5 15.5 L15.5 32.5"
+                                  stroke="currentColor"
+                                  stroke-width="1.3"
+                                  opacity="0.65"/>
+
+                            <circle cx="24" cy="24" r="7"
+                                    fill="currentColor"
+                                    opacity="0.18"/>
+
+                            <circle cx="24" cy="24" r="4"
+                                    fill="currentColor"/>
+
+                            <circle cx="24" cy="5" r="2"
+                                    fill="currentColor"/>
+
+                            <circle cx="39" cy="14" r="2"
+                                    fill="currentColor"/>
+
+                            <circle cx="39" cy="34" r="2"
+                                    fill="currentColor"/>
+
+                            <circle cx="24" cy="43" r="2"
+                                    fill="currentColor"/>
+
+                            <circle cx="9" cy="34" r="2"
+                                    fill="currentColor"/>
+
+                            <circle cx="9" cy="14" r="2"
+                                    fill="currentColor"/>
+
+                        </svg>
+
+                    </div>
+
+
+                    <p class="welcome-eyebrow">
+
+                        VOTRE INTELLIGENCE, EN LOCAL
+
+                    </p>
+
+
+                    <h1>
+
+                        Que souhaitez-vous<br>
+
+                        <span>explorer aujourd'hui ?</span>
+
+                    </h1>
+
+
+                    <p class="welcome-description">
+
+                        Posez vos questions, développez vos idées
+                        et apprenez avec votre assistant personnel.
+
+                    </p>
+
+
+                    <!-- SUGGESTIONS -->
+                    <div class="suggestion-grid">
+
+
+                        <button class="suggestion-card"
+                                data-prompt="Explique-moi un concept informatique simplement.">
+
+                            <span>⌘</span>
+
+                            <strong>Apprendre</strong>
+
+                            <small>Comprendre de nouveaux concepts</small>
+
+                        </button>
+
+
+                        <button class="suggestion-card"
+                                data-prompt="Aide-moi à trouver des idées pour un projet.">
+
+                            <span>✧</span>
+
+                            <strong>Créer</strong>
+
+                            <small>Développer de nouvelles idées</small>
+
+                        </button>
+
+
+                        <button class="suggestion-card"
+                                data-prompt="Aide-moi à écrire un programme Python.">
+
+                            <span>⌨</span>
+
+                            <strong>Programmer</strong>
+
+                            <small>Résoudre des problèmes techniques</small>
+
+                        </button>
+
+
+                        <button class="suggestion-card"
+                                data-prompt="Aide-moi à organiser mon travail et mes priorités.">
+
+                            <span>◈</span>
+
+                            <strong>Organiser</strong>
+
+                            <small>Structurer mes tâches</small>
+
+                        </button>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- MESSAGES -->
+                <div class="messages-container" id="messages-container"></div>
+
+
+            </section>
+
+
+            <!-- ZONE DE SAISIE -->
+            <footer class="composer-area">
+
+
+                <form class="message-form" id="message-form">
+
+
+                    <textarea
+                        id="message-input"
+                        placeholder="Écrivez votre message à LocalMind..."
+                        rows="1"
+                        required
+                    ></textarea>
+
+
+                    <div class="composer-bottom">
+
+
+                        <span class="composer-hint">
+
+                            LocalMind fonctionne sur votre appareil.
+
+                        </span>
+
+
+                        <div class="composer-actions">
+
+
+                            <!-- MICROPHONE -->
+                            <button
+                                type="button"
+                                id="mic-button"
+                                class="mic-button"
+                                title="Parler à LocalMind"
+                                aria-label="Activer le microphone"
+                            >
+
+                                🎤
+
+                            </button>
+
+
+                            <!-- ENVOYER -->
+                            <button type="submit" id="send-button">
+
+                                ↑
+
+                            </button>
+
+
+                        </div>
+
+                    </div>
+
+
+                </form>
+
+
+                <p class="disclaimer">
+
+                    LocalMind peut produire des réponses incorrectes.
+                    Vérifiez les informations importantes.
+
+                </p>
+
+
+            </footer>
+
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>
