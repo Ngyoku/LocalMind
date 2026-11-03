@@ -6,6 +6,10 @@ LocalMind is an offline AI assistant designed to run locally on a computer, with
 
 The project explores how artificial intelligence can become more accessible, private, and adaptable to different computer hardware configurations.
 
+**Repository:** https://github.com/Ngyoku/LocalMind
+
+---
+
 ## 1. Project Overview
 
 Many AI assistants depend on cloud infrastructure, remote servers, and continuous internet connectivity.
@@ -38,8 +42,11 @@ Its objective is to provide a local conversational assistant while adapting its 
 - SQLite database integration.
 
 ### Voice Components
-- Speech-related modules.
-- Microphone and speech-processing components.
+- Speech-to-text components using Faster-Whisper.
+- Microphone input using SoundDevice.
+- Text-to-speech components using pyttsx3.
+
+Voice functionality may require additional model setup and hardware testing.
 
 ### Application and Media Actions
 - Local application interaction.
@@ -61,6 +68,8 @@ Its objective is to provide a local conversational assistant while adapting its 
 | Backend | Flask |
 | Desktop integration | pywebview |
 | Database | SQLite |
+| Speech recognition | Faster-Whisper |
+| Text-to-speech | pyttsx3 |
 | Hardware detection | Python and Windows APIs |
 | Version control | Git and GitHub |
 
@@ -69,13 +78,17 @@ Its objective is to provide a local conversational assistant while adapting its 
 ```text
 LocalMind/
 ├── agent/
+│   └── modules/
 ├── static/
+│   ├── css/
+│   └── js/
 ├── templates/
 ├── app.py
 ├── desktop.py
 ├── ai_engine.py
 ├── engine_manager.py
 ├── hardware_detector.py
+├── hardware_test.py
 ├── database.py
 ├── action_manager.py
 ├── voice_engine.py
@@ -88,16 +101,108 @@ LocalMind/
 
 The AI model and compiled inference engine are distributed separately from the source repository.
 
-## 5. Hardware Adaptation
+## 5. System Requirements
+
+The current implementation is designed for Windows.
+
+Recommended starting environment:
+
+- Windows 10 or Windows 11, 64-bit.
+- Python 3.14.5 (the version used for current development).
+- At least 8 GB RAM for the current lightweight model configuration.
+- Sufficient free disk space for the model and inference engine.
+- A compatible Windows x64 llama.cpp executable.
+
+Actual performance depends on the computer's available resources.
+
+## 6. Installation Guide
+
+### Step 1 — Clone the repository
+
+Open PowerShell and run:
+
+```powershell
+git clone https://github.com/Ngyoku/LocalMind.git
+cd LocalMind
+```
+
+### Step 2 — Create a Python virtual environment
+
+```powershell
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+```
+
+If PowerShell blocks script execution, use the following command for the current terminal session:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\venv\Scripts\Activate.ps1
+```
+
+### Step 3 — Install Python dependencies
+
+```powershell
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+### Step 4 — Install the llama.cpp engine
+
+Obtain a compatible Windows x64 build of llama.cpp from its official project releases:
+
+https://github.com/ggml-org/llama.cpp/releases
+
+Extract the build and place the required executable at:
+
+```text
+LocalMind/
+└── engine/
+    └── llama-server.exe
+```
+
+The executable must be named `llama-server.exe`.
+
+### Step 5 — Obtain the AI model
+
+Download a compatible GGUF quantized version of:
+
+**Qwen 2.5 1.5B Instruct — Q4_K_M**
+
+Place the model at:
+
+```text
+LocalMind/
+└── models/
+    └── qwen2.5-1.5b-instruct-q4_k_m.gguf
+```
+
+The filename and directory must match the paths configured in `config.py`.
+
+### Step 6 — Start LocalMind
+
+From the project root, with the virtual environment activated:
+
+```powershell
+python desktop.py
+```
+
+The desktop application starts the local inference engine, starts the Flask server, and opens the LocalMind window.
+
+The first launch may take longer while the model is loaded into memory.
+
+## 7. Hardware Adaptation
 
 LocalMind analyzes the computer's available resources before starting its inference engine.
 
 The current implementation adjusts:
+
 - CPU thread count.
 - Context size.
 - GPU layers according to llama.cpp device availability.
 
 The development machine used for current validation has:
+
 - Intel Core i5-4200U.
 - Approximately 8 GB RAM.
 - Intel HD Graphics.
@@ -107,17 +212,18 @@ The application and adaptive CPU configuration have been tested on this developm
 
 NVIDIA CUDA integration and compatibility across other hardware configurations remain under development and require further testing.
 
-## 6. Privacy and Offline Operation
+## 8. Data Storage and Privacy
 
 LocalMind is designed to perform its core AI inference locally.
 
-Its purpose is to reduce dependence on cloud-based AI services and give users greater control over their interactions.
-
 Conversation data is stored locally through SQLite.
 
-## 7. Current Development Status
+The application does not require a remote AI inference service for its core conversational functionality.
 
-Implemented and tested on the development machine:
+## 9. Current Development Status
+
+### Implemented and tested on the development machine
+
 - Local llama.cpp engine startup and shutdown.
 - Hardware resource detection.
 - Automatic engine parameter selection.
@@ -126,13 +232,23 @@ Implemented and tested on the development machine:
 - Desktop application integration.
 - Application and media actions.
 
-Further development:
+### Further development
+
 - NVIDIA CUDA acceleration.
 - Cross-machine compatibility validation.
-- Installation and distribution.
+- Installation and distribution improvements.
 - Additional performance optimization.
+- Further voice functionality testing.
 
-## 8. Project Vision
+## 10. Important Notes
+
+- The GitHub repository contains the source code, not the AI model or compiled llama.cpp executable.
+- The model and inference engine must be obtained separately.
+- Python dependencies must be installed before launching the application.
+- The current hardware adaptation has been validated on the development machine only.
+- CPU inference performance varies according to available hardware resources.
+
+## 11. Project Vision
 
 LocalMind aims to make local artificial intelligence more accessible and adaptable.
 
